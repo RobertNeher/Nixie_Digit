@@ -34,14 +34,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String numberSet = "04";
+  String numberSet = "0123456789";
   int number = 0, index = 0;
-  Timer timer = Timer(Duration(days: 1), () {});
+  Timer timer = Timer(const Duration(days: 1), () {});
 
   @override
   void initState() {
     index = 0;
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {});
       index++;
       if (index >= numberSet.length) index = 0;
@@ -55,10 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Stack(alignment: Alignment.center, children: [
       // NixieDigit(number: 0),
       NixieDigit(number: int.parse(numberSet[index])),
-      // NixieDigit(number,
-      //     anode: true,
-      //     anodeColor: Colors.blueGrey,),
-      // const Cathode(cathodeColor: Colors.blueGrey),
+      NixieDigit(
+        number: int.parse(numberSet[index]),
+        anodeColor: Colors.blueGrey,
+      ),
+      const Cathode(cathodeColor: Colors.blueGrey),
     ]));
   }
 }

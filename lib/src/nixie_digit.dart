@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class NixieDigit extends StatefulWidget {
@@ -63,29 +65,96 @@ class DigitPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeWidth = anode ? 2 : _size.height / 40;
+    Path path = Path();
 
     if (number == 0) {
       canvas.drawOval(
           Rect.fromCenter(
               center: Offset(_size.width * 0.5, _size.height * 0.5),
-              width: _size.height * 0.5,
-              height: _size.height * 0.85),
+              width: _size.height * 0.4,
+              height: _size.height * 0.6),
           paint);
     } else if (number == 1) {
-      canvas.drawLine(Offset(_size.width * 0.5, _size.height * 0.1),
-          Offset(_size.width * 0.5, _size.height * 0.9), paint);
-    } else if (number == 4) {
-      canvas.drawLine(Offset(_size.width * 0.1, _size.height * 0.5),
-          Offset(_size.width * 0.9, _size.height * 0.5), paint);
       canvas.drawLine(Offset(_size.width * 0.5, _size.height * 0.2),
+          Offset(_size.width * 0.5, _size.height * 0.8), paint);
+    } else if (number == 2) {
+      canvas.drawArc(
+          Rect.fromCircle(
+              center: Offset(_size.width * 0.45, _size.height * 0.3),
+              radius: _size.width * 0.25),
+          pi,
+          pi + pi / 6,
+          false,
+          paint);
+      canvas.drawLine(Offset(_size.width * 0.45, _size.height * 0.3),
+          Offset(_size.width * 0.7, _size.height * 0.2), paint);
+      // path.moveTo(_size.width * 0.5, _size.height * 0.5);
+      // path.cubicTo(_size.width * 0.7, _size.height * 0.2, _size.width * 0.65,
+      //     _size.height * 0.1, _size.width * 0.2, _size.height * 0.8);
+      // canvas.drawPath(path, paint);
+    } else if (number == 3) {
+      canvas.drawLine(Offset(_size.width * 0.2, _size.height * 0.2),
+          Offset(_size.width * 0.8, _size.height * 0.2), paint);
+      canvas.drawLine(Offset(_size.width * 0.8, _size.height * 0.2),
+          Offset(_size.width * 0.61, _size.height * 0.45), paint);
+      canvas.drawArc(
+          Rect.fromCircle(
+              center: Offset(_size.width * 0.5, _size.height * 0.6),
+              radius: _size.width * 0.28),
+          -pi / 3,
+          1.2 * pi,
+          false,
+          paint);
+    } else if (number == 4) {
+      canvas.drawLine(Offset(_size.width * 0.2, _size.height * 0.5),
+          Offset(_size.width * 0.8, _size.height * 0.5), paint);
+      canvas.drawLine(Offset(_size.width * 0.5, _size.height * 0.4),
           Offset(_size.width * 0.5, _size.height * 0.8), paint);
       canvas.drawLine(Offset(_size.width * 0.2, _size.height * 0.5),
           Offset(_size.width * 0.5, _size.height * 0.2), paint);
+    } else if (number == 6) {
+      canvas.drawOval(
+          Rect.fromCenter(
+              center: Offset(_size.width * 0.5, _size.height * 0.6),
+              width: _size.height * 0.35,
+              height: _size.height * 0.35),
+          paint);
+      path.moveTo(_size.width * 0.24, _size.height * 0.6);
+      path.cubicTo(_size.width * 0.2, _size.height * 0.2, _size.width * 0.55,
+          _size.height * 0.2, _size.width * 0.5, _size.height * 0.2);
+      canvas.drawPath(path, paint);
     } else if (number == 7) {
-      canvas.drawLine(Offset(_size.width * 0, _size.height * 0.25),
-          Offset(_size.width * 0.65, _size.height * 0.25), paint);
-      canvas.drawLine(Offset(_size.width * 0.65, _size.height * 0.25),
-          Offset(_size.width * 0.65, _size.height * 0.65), paint);
+      canvas.drawLine(Offset(_size.width * 0.2, _size.height * 0.2),
+          Offset(_size.width * 0.65, _size.height * 0.2), paint);
+      canvas.drawLine(Offset(_size.width * 0.65, _size.height * 0.2),
+          Offset(_size.width * 0.4, _size.height * 0.75), paint);
+    } else if (number == 8) {
+      canvas.drawOval(
+          Rect.fromCenter(
+              center: Offset(_size.width * 0.5, _size.height * 0.35),
+              width: _size.height * 0.25,
+              height: _size.height * 0.25),
+          paint);
+      canvas.drawOval(
+          Rect.fromCenter(
+              center: Offset(_size.width * 0.5, _size.height * 0.65),
+              width: _size.height * 0.35,
+              height: _size.height * 0.35),
+          paint);
+    } else if (number == 9) {
+      Path path = Path();
+
+      canvas.drawOval(
+          Rect.fromCenter(
+              center: Offset(_size.width * 0.5, _size.height * 0.4),
+              width: _size.height * 0.35,
+              height: _size.height * 0.35),
+          paint);
+
+      path.moveTo(_size.width * 0.76, _size.height * 0.4);
+      path.cubicTo(_size.width * 0.75, _size.height * 0.75, _size.width * 0.5,
+          _size.height * 0.8, _size.width * 0.5, _size.height * 0.8);
+      canvas.drawPath(path, paint);
     }
   }
 

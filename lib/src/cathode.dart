@@ -17,8 +17,8 @@ class _CathodeState extends State<Cathode> {
         MediaQuery.of(context).size.height - 10);
 
     return SizedBox(
-      height: size.height,
-      width: size.width,
+      height: size.height * 0.8,
+      width: size.width * 0.8,
       child: CustomPaint(
         painter: CathodePainter(cathodeColor: widget.cathodeColor, size: size),
         child: Container(),
