@@ -178,19 +178,18 @@ class DigitPainter extends CustomPainter {
           false,
           paint);
     } else if (number == 9) {
-      Path path = Path();
-
-      canvas.drawOval(
-          Rect.fromCenter(
-              center: Offset(_size.width * 0.5, _size.height * 0.4),
-              width: _size.height * 0.35,
-              height: _size.height * 0.35),
+      canvas.drawArc(
+          Rect.fromCircle(
+              center: Offset(_size.width * 0.47, _size.height * 0.35),
+              radius: _size.width * 0.3),
+          0,
+          2 * pi,
+          false,
           paint);
-
-      path.moveTo(_size.width * 0.76, _size.height * 0.4);
-      path.cubicTo(_size.width * 0.75, _size.height * 0.75, _size.width * 0.5,
-          _size.height * 0.8, _size.width * 0.5, _size.height * 0.8);
-      canvas.drawPath(path, paint);
+      // canvas.drawLine(Offset(_size.width * 0.8, _size.height * 0.52),
+      //     Offset(_size.width * 0.5, _size.height * 0.8), paint);
+      canvas.drawLine(Offset(_size.width * 0.76, _size.height * 0.4),
+          Offset(_size.width * 0.5, _size.height * 0.8), paint);
     }
   }
 
