@@ -1,17 +1,20 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:nixie_digit/src/cathode.dart';
 
 class NixieDigit extends StatefulWidget {
-  final Color anodeColor;
-  final Color digitColor;
+  final Color dimmedColor;
+  final Color glowingColor;
+  final Color cathodeColor;
   final int number;
 
   const NixieDigit(
       {Key? key,
       required this.number,
-      this.anodeColor = Colors.grey,
-      this.digitColor = Colors.deepOrange})
+      this.dimmedColor = Colors.grey,
+      this.glowingColor = Colors.deepOrange,
+      this.cathodeColor = Colors.blueAccent})
       : super(key: key);
 
   @override
@@ -28,43 +31,47 @@ class _NixieDigitState extends State<NixieDigit> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> digitStack = [];
     size = MediaQuery.of(context).size;
 
-    return CustomPaint(
-      painter: DigitPainter(
-          number: widget.number,
-          anode: false,
-          anodeColor: widget.anodeColor,
-          digitColor: widget.digitColor),
-      foregroundPainter: DigitPainter(
-          number: widget.number,
-          anode: true,
-          anodeColor: widget.anodeColor,
-          digitColor: widget.digitColor),
-      child: Container(),
-    );
+    for (int i = 0; i <= 9; i++) {
+      digitStack.add(CustomPaint(
+        painter: DigitPainter(
+            number: i,
+            glowingNumber: i == widget.number,
+            dimmedColor: widget.dimmedColor,
+            glowingColor: widget.glowingColor),
+        child: Container(),
+      ));
+    }
+    digitStack.add(const Cathode(
+      cathodeColor: Colors.blueGrey,
+    ));
+
+    return Stack(
+        fit: StackFit.loose, alignment: Alignment.center, children: digitStack);
   }
 }
 
 class DigitPainter extends CustomPainter {
-  final bool anode;
+  final bool glowingNumber;
   final int number;
-  final Color anodeColor;
-  final Color digitColor;
+  final Color dimmedColor;
+  final Color glowingColor;
   DigitPainter(
       {required this.number,
-      this.anode = false,
-      this.anodeColor = Colors.transparent,
-      this.digitColor = Colors.transparent});
+      this.glowingNumber = true,
+      this.dimmedColor = Colors.transparent,
+      this.glowingColor = Colors.transparent});
 
   @override
   void paint(canvas, size) {
     Size _size = Size(size.height * 2 / 3, size.height);
     Paint paint = Paint()
-      ..color = anode ? anodeColor : digitColor
+      ..color = glowingNumber ? glowingColor : dimmedColor
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = anode ? 4 : _size.height / 40;
+      ..strokeWidth = glowingNumber ? _size.height / 40 : 4;
     Path path = Path();
 
     if (number == 0) {
@@ -89,8 +96,6 @@ class DigitPainter extends CustomPainter {
     } else if (number == 1) {
       canvas.drawLine(Offset(_size.width * 0.5, _size.height * 0.15),
           Offset(_size.width * 0.5, _size.height * 0.8), paint);
-      // canvas.drawLine(Offset(_size.width * 0.5, _size.height * 0.15),
-      //     Offset(_size.width * 0.45, _size.height * 0.2), paint);
     } else if (number == 2) {
       canvas.drawArc(
           Rect.fromLTWH(_size.width * 0.175, _size.height * 0.15,

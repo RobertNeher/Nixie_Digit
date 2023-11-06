@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:nixie_digit/src/nixie_digit.dart';
-import 'package:nixie_digit/src/cathode.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Nixie Tube Digit'),
     );
   }
 }
@@ -34,17 +34,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String numberSet = "0123456789";
-  int number = 0, index = 0;
+  int number = 0;
   Timer timer = Timer(const Duration(days: 1), () {});
 
   @override
   void initState() {
-    index = 0;
+    number = 0;
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {});
-      index++;
-      if (index >= numberSet.length) index = 0;
+      number++;
+      if (number > 9) number = 0;
     });
     super.initState();
   }
@@ -52,14 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(alignment: Alignment.center, children: [
-      // NixieDigit(number: 0),
-      NixieDigit(number: int.parse(numberSet[index])),
-      NixieDigit(
-        number: int.parse(numberSet[index]),
-        anodeColor: Colors.blueGrey,
+      // body: Stack(alignment: Alignment.center, children: [
+      body: NixieDigit(
+        number: number,
+        dimmedColor: Colors.blueGrey,
+        cathodeColor: Colors.black26,
+        glowingColor: Colors.deepOrange,
       ),
-      const Cathode(cathodeColor: Colors.blueGrey),
-    ]));
+    );
   }
 }
