@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nixie_digit/src/cathode.dart';
+import 'package:nixie_digit/src/tube.dart';
 
 class NixieDigit extends StatefulWidget {
   final Color dimmedColor;
@@ -47,6 +48,7 @@ class _NixieDigitState extends State<NixieDigit> {
     digitStack.add(const Cathode(
       cathodeColor: Colors.blueGrey,
     ));
+    digitStack.add(NixieTube(size: size));
 
     return Stack(
         fit: StackFit.loose, alignment: Alignment.center, children: digitStack);

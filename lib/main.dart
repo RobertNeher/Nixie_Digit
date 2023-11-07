@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:nixie_digit/src/nixie_digit.dart';
+import 'package:nixie_digit/src/tube.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,7 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: Stack(alignment: Alignment.center, children: [
       body: NixieDigit(
         number: number,
         dimmedColor: Colors.blueGrey,
